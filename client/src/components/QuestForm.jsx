@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const ASSIGNEES = [
   { value: 'jake', label: 'Jake' },
@@ -6,12 +6,16 @@ const ASSIGNEES = [
   { value: 'both', label: 'Both' },
 ];
 
-export default function QuestForm({ categories, onSubmit }) {
+export default function QuestForm({ categories, defaultAssignee = 'jake', onSubmit }) {
   const [name, setName] = useState('');
   const [category, setCategory] = useState(categories[0]);
   const [difficulty, setDifficulty] = useState(1);
-  const [assignee, setAssignee] = useState('jake');
+  const [assignee, setAssignee] = useState(defaultAssignee);
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    setAssignee(defaultAssignee);
+  }, [defaultAssignee]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

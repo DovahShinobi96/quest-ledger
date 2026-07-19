@@ -41,10 +41,27 @@ async function init() {
       category TEXT NOT NULL CHECK (category IN ('Proactive', 'Leisure', 'Health')),
       name TEXT NOT NULL,
       difficulty INTEGER NOT NULL CHECK (difficulty BETWEEN 1 AND 5),
-      assignee TEXT NOT NULL CHECK (assignee IN ('jake', 'paula', 'both')),
+      assignee TEXT NOT NULL CHECK (assignee IN ('jake', 'paula')),
       completed BOOLEAN NOT NULL DEFAULT FALSE,
       completed_at TIMESTAMPTZ
     );
+  `);
+
+  // Migration: earlier versions allowed assignee = 'both' on a single row,
+  // shared by both people. 'both' is now expanded into two independent rows
+  // at creation time instead, so split any existing 'both' rows into a
+  // jake/paula pair (preserving completion state) before tightening the
+  // constraint. Idempotent: once no 'both' rows remain, this is a no-op.
+  await pool.query(`
+    INSERT INTO quests (week_id, category, name, difficulty, assignee, completed, completed_at)
+    SELECT week_id, category, name, difficulty, 'paula', completed, completed_at
+    FROM quests WHERE assignee = 'both';
+
+    UPDATE quests SET assignee = 'jake' WHERE assignee = 'both';
+  `);
+  await pool.query(`
+    ALTER TABLE quests DROP CONSTRAINT IF EXISTS quests_assignee_check;
+    ALTER TABLE quests ADD CONSTRAINT quests_assignee_check CHECK (assignee IN ('jake', 'paula'));
   `);
 
   const { rows } = await pool.query('SELECT COUNT(*)::int AS count FROM participants');

@@ -1,10 +1,17 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCurrentSeason } from '../hooks/useCurrentSeason.js';
+import { api } from '../api/client.js';
+import { getLevelProgress } from '../lib/leveling.js';
 import ProgressBar from '../components/ProgressBar.jsx';
 
 export default function Dashboard() {
   const { season, error } = useCurrentSeason();
+  const [stats, setStats] = useState(undefined);
+
+  useEffect(() => {
+    api.getStats().then(setStats).catch(() => {});
+  }, []);
 
   const lastWeekWinner = useMemo(() => {
     if (!season) return null;
@@ -56,6 +63,24 @@ export default function Dashboard() {
           </div>
         )}
       </div>
+
+      {stats && (
+        <div className="stat-card">
+          <h3>Levels</h3>
+          {['jake', 'paula'].map((who) => {
+            const { level, pointsIntoLevel, pointsForNextLevel } = getLevelProgress(stats.lifetime[who].points);
+            const label = `${who === 'jake' ? 'Jake' : 'Paula'} — Level ${level}`;
+            return (
+              <ProgressBar
+                key={who}
+                label={label}
+                value={pointsIntoLevel}
+                max={pointsForNextLevel}
+              />
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

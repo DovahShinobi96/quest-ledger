@@ -21,12 +21,20 @@ router.post('/weeks/:weekId/quests', asyncHandler(async (req, res) => {
   }
   if (!ASSIGNEES.includes(assignee)) return res.status(400).json({ error: 'Invalid assignee' });
 
-  const { rows: questRows } = await pool.query(
-    'INSERT INTO quests (week_id, category, name, difficulty, assignee) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-    [week.id, category, name.trim(), difficulty, assignee]
-  );
+  // 'both' is a creation-time convenience only: it expands into two
+  // independent rows (one per participant) rather than being stored as-is,
+  // so completing one copy never affects the other person's.
+  const owners = assignee === 'both' ? ['jake', 'paula'] : [assignee];
+  const created = [];
+  for (const owner of owners) {
+    const { rows: questRows } = await pool.query(
+      'INSERT INTO quests (week_id, category, name, difficulty, assignee) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [week.id, category, name.trim(), difficulty, owner]
+    );
+    created.push(questRows[0]);
+  }
 
-  res.status(201).json(questRows[0]);
+  res.status(201).json(created);
 }));
 
 router.patch('/quests/:id', asyncHandler(async (req, res) => {

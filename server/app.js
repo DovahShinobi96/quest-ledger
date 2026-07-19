@@ -6,6 +6,7 @@ const participantsRouter = require('./routes/participants');
 const seasonsRouter = require('./routes/seasons');
 const weeksRouter = require('./routes/weeks');
 const questsRouter = require('./routes/quests');
+const statsRouter = require('./routes/stats');
 
 async function createApp() {
   await init();
@@ -21,6 +22,7 @@ async function createApp() {
   app.use('/api/participants', participantsRouter);
   app.use('/api/seasons', seasonsRouter);
   app.use('/api/weeks', weeksRouter);
+  app.use('/api/stats', statsRouter);
   app.use('/api', questsRouter);
 
   app.use((err, req, res, next) => {

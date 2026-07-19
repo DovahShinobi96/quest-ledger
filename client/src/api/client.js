@@ -23,4 +23,5 @@ export const api = {
   addQuest: (weekId, data) => request(`/weeks/${weekId}/quests`, { method: 'POST', body: JSON.stringify(data) }),
   toggleQuest: (id, completed) => request(`/quests/${id}`, { method: 'PATCH', body: JSON.stringify({ completed }) }),
   deleteQuest: (id) => request(`/quests/${id}`, { method: 'DELETE' }),
+  getStats: () => request('/stats'),
 };

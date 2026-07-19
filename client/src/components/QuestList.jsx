@@ -1,5 +1,4 @@
 const CATEGORY_ICONS = { Proactive: '🧹', Leisure: '🎮', Health: '💪' };
-const ASSIGNEE_LABELS = { jake: 'Jake', paula: 'Paula', both: 'Both' };
 
 export default function QuestList({ category, quests, onToggle, onDelete }) {
   return (
@@ -13,7 +12,6 @@ export default function QuestList({ category, quests, onToggle, onDelete }) {
               <input type="checkbox" checked={!!q.completed} onChange={() => onToggle(q)} />
               <span className="quest-name">{q.name}</span>
               <span className="quest-difficulty">{'★'.repeat(q.difficulty)}</span>
-              <span className="quest-assignee">{ASSIGNEE_LABELS[q.assignee]}</span>
             </label>
             <button className="delete-btn" onClick={() => onDelete(q)} aria-label="Delete quest">✕</button>
           </li>

@@ -7,6 +7,8 @@
   --accent: #7c5cff;
   --accent-2: #ff9f5c;
   --border: #e4e0f7;
+  --series-jake: #2a78d6;
+  --series-paula: #008300;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -16,6 +18,8 @@
     --text: #efeaff;
     --muted: #a49fc7;
     --border: #322d55;
+    --series-jake: #3987e5;
+    --series-paula: #008300;
   }
 }
 
@@ -71,6 +75,12 @@ body {
 .dashboard, .this-week, .seasons {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
+}
+
+.statistics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 1rem;
 }
 
@@ -176,6 +186,22 @@ button:disabled {
   gap: 1.5rem;
   font-weight: 600;
   color: var(--muted);
+}
+
+.person-tabs {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.person-tabs button {
+  flex: 1;
+  font-weight: 600;
+}
+
+.person-tabs button.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
 }
 
 .quest-form {

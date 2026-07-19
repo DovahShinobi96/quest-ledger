@@ -12,11 +12,8 @@ async function computeWeekTotals(weekId) {
   const totals = emptyTotals();
   for (const q of quests) {
     if (!q.completed) continue;
-    const recipients = q.assignee === 'both' ? ['jake', 'paula'] : [q.assignee];
-    for (const who of recipients) {
-      totals[who].points += 1;
-      totals[who].difficulty += q.difficulty;
-    }
+    totals[q.assignee].points += 1;
+    totals[q.assignee].difficulty += q.difficulty;
   }
   return totals;
 }
