@@ -1,0 +1,314 @@
+:root {
+  color-scheme: light dark;
+  --bg: #f5f3ff;
+  --card: #ffffff;
+  --text: #24213b;
+  --muted: #6b6785;
+  --accent: #7c5cff;
+  --accent-2: #ff9f5c;
+  --border: #e4e0f7;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #16142a;
+    --card: #211f3b;
+    --text: #efeaff;
+    --muted: #a49fc7;
+    --border: #322d55;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.app-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.app-header nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.app-header nav a {
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--muted);
+  font-weight: 600;
+  border: 1px solid var(--border);
+}
+
+.app-header nav a.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.dashboard, .this-week, .seasons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.progress-row {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+}
+
+.progress-row.leader {
+  border-color: var(--accent);
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.progress-track {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transition: width 0.2s ease;
+}
+
+.leader-line {
+  font-weight: 600;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.stat-card h3 {
+  margin-top: 0;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+}
+
+.button, button {
+  font-family: inherit;
+}
+
+.button {
+  display: inline-block;
+  background: var(--accent);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+button {
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.this-week-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.week-totals {
+  display: flex;
+  gap: 1.5rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.quest-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.75rem;
+}
+
+.quest-form input[type='text'] {
+  flex: 1;
+  min-width: 140px;
+}
+
+.quest-form input, .quest-form select {
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.quest-category {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+}
+
+.quest-category h3 {
+  margin-top: 0;
+}
+
+.quest-category ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.quest-category li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.quest-category li:last-child {
+  border-bottom: none;
+}
+
+.quest-category li.completed .quest-name {
+  text-decoration: line-through;
+  color: var(--muted);
+}
+
+.quest-category label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex: 1;
+}
+
+.quest-name {
+  flex: 1;
+}
+
+.quest-difficulty {
+  color: var(--accent-2);
+}
+
+.quest-assignee {
+  font-size: 0.8rem;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+}
+
+.delete-btn {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  padding: 0.2rem 0.5rem;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.error {
+  color: #ff5c7a;
+}
+
+.season-summary, .season-form {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.season-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-weight: 600;
+}
+
+.season-form input {
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.4rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+}

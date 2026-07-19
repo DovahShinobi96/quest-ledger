@@ -1,0 +1,8 @@
+node_modules/
+server/quest-ledger.db
+server/quest-ledger.db-*
+client/dist/
+.env
+.env.local
+
+.claude/
