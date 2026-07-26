@@ -81,10 +81,20 @@ router.post('/:id/weeks', asyncHandler(async (req, res) => {
   if (currentWeek) {
     await pool.query("UPDATE weeks SET status = 'completed' WHERE id = $1", [currentWeek.id]);
   }
-  await pool.query('INSERT INTO weeks (season_id, week_number) VALUES ($1, $2)', [
-    season.id,
-    weeks.length + 1,
-  ]);
+  const { rows: newWeekRows } = await pool.query(
+    'INSERT INTO weeks (season_id, week_number) VALUES ($1, $2) RETURNING *',
+    [season.id, weeks.length + 1]
+  );
+
+  // Carry over anything not ticked off yet; only completed items are left behind.
+  if (currentWeek) {
+    await pool.query(
+      `INSERT INTO quests (week_id, category, name, difficulty, assignee)
+       SELECT $1, category, name, difficulty, assignee
+       FROM quests WHERE week_id = $2 AND completed = FALSE`,
+      [newWeekRows[0].id, currentWeek.id]
+    );
+  }
 
   const { rows: updatedRows } = await pool.query('SELECT * FROM seasons WHERE id = $1', [season.id]);
   res.status(201).json(await serializeSeason(updatedRows[0]));
