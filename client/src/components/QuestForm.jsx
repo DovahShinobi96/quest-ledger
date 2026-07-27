@@ -44,7 +44,7 @@ export default function QuestForm({ categories, defaultAssignee = 'jake', onSubm
     <form className="quest-form" onSubmit={handleSubmit}>
       <input
         type="text"
-        placeholder="Quest name"
+        placeholder="Inscribe a new quest…"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
@@ -75,7 +75,7 @@ export default function QuestForm({ categories, defaultAssignee = 'jake', onSubm
           title="Times to complete this quest before it's done"
         />
       </label>
-      <button type="submit" disabled={submitting}>Add Quest</button>
+      <button type="submit" disabled={submitting}>⚔️ Add Quest</button>
     </form>
   );
 }

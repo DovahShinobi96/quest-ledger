@@ -57,8 +57,8 @@ export default function ThisWeek() {
   if (season === null) {
     return (
       <div className="empty-state">
-        <p>No active season yet.</p>
-        <Link to="/seasons" className="button">Start a Season</Link>
+        <p>No chapter is underway yet.</p>
+        <Link to="/seasons" className="button">📖 Begin a New Chapter</Link>
       </div>
     );
   }
@@ -71,7 +71,7 @@ export default function ThisWeek() {
       <div className="this-week-header">
         <h2>Week {week.week_number} of {season.week_count}</h2>
         <button onClick={handleAdvanceWeek} disabled={!canAdvance}>
-          {canAdvance ? 'Advance to Next Week' : 'Final Week'}
+          {canAdvance ? '🗺️ Advance to Next Week' : '🏁 Final Week'}
         </button>
       </div>
 

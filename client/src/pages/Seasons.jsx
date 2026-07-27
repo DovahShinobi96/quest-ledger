@@ -53,13 +53,13 @@ export default function Seasons() {
               ))}
             </tbody>
           </table>
-          <button onClick={handleEnd}>End Season</button>
+          <button onClick={handleEnd}>📕 Close This Chapter</button>
         </div>
       )}
 
       {!season && (
         <form className="season-form" onSubmit={handleStart}>
-          <h2>Start a New Season</h2>
+          <h2>📖 Begin a New Chapter</h2>
           <label>
             Name (optional)
             <input value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Summer Grind" />
@@ -68,7 +68,7 @@ export default function Seasons() {
             Weeks
             <input type="number" min="1" value={weekCount} onChange={(e) => setWeekCount(e.target.value)} />
           </label>
-          <button type="submit">Start Season</button>
+          <button type="submit">📜 Begin Chapter</button>
         </form>
       )}
 

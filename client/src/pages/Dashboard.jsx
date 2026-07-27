@@ -28,8 +28,8 @@ export default function Dashboard() {
   if (season === null) {
     return (
       <div className="empty-state">
-        <p>No active season yet.</p>
-        <Link to="/seasons" className="button">Start a Season</Link>
+        <p>No chapter is underway yet.</p>
+        <Link to="/seasons" className="button">📖 Begin a New Chapter</Link>
       </div>
     );
   }
