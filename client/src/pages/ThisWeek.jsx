@@ -34,8 +34,8 @@ export default function ThisWeek() {
     loadWeek();
   };
 
-  const handleToggle = async (quest) => {
-    await api.toggleQuest(quest.id, !quest.completed);
+  const handleProgressChange = async (quest, progress) => {
+    await api.setQuestProgress(quest.id, progress);
     loadWeek();
   };
 
@@ -101,7 +101,7 @@ export default function ThisWeek() {
           key={category}
           category={category}
           quests={week.quests.filter((q) => q.category === category && q.assignee === activeTab)}
-          onToggle={handleToggle}
+          onProgressChange={handleProgressChange}
           onDelete={handleDelete}
         />
       ))}

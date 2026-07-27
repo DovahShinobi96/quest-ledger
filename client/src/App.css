@@ -227,6 +227,17 @@ button:disabled {
   color: var(--text);
 }
 
+.target-count-field {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--muted);
+}
+
+.target-count-field input {
+  width: 3.5rem;
+}
+
 .quest-category {
   background: var(--card);
   border: 1px solid var(--border);
@@ -265,11 +276,23 @@ button:disabled {
   color: var(--muted);
 }
 
-.quest-category label {
+.quest-info {
   display: flex;
   align-items: center;
   gap: 0.6rem;
   flex: 1;
+}
+
+.quest-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.quest-progress-count {
+  margin-left: 0.3rem;
+  font-size: 0.8rem;
+  color: var(--muted);
 }
 
 .quest-name {

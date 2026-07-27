@@ -11,6 +11,7 @@ export default function QuestForm({ categories, defaultAssignee = 'jake', onSubm
   const [category, setCategory] = useState(categories[0]);
   const [difficulty, setDifficulty] = useState(1);
   const [assignee, setAssignee] = useState(defaultAssignee);
+  const [targetCount, setTargetCount] = useState(1);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -22,9 +23,10 @@ export default function QuestForm({ categories, defaultAssignee = 'jake', onSubm
     if (!name.trim()) return;
     setSubmitting(true);
     try {
-      await onSubmit({ name: name.trim(), category, difficulty, assignee });
+      await onSubmit({ name: name.trim(), category, difficulty, assignee, target_count: targetCount });
       setName('');
       setDifficulty(1);
+      setTargetCount(1);
     } finally {
       setSubmitting(false);
     }
@@ -53,6 +55,17 @@ export default function QuestForm({ categories, defaultAssignee = 'jake', onSubm
           <option key={a.value} value={a.value}>{a.label}</option>
         ))}
       </select>
+      <label className="target-count-field">
+        ×
+        <input
+          type="number"
+          min={1}
+          max={14}
+          value={targetCount}
+          onChange={(e) => setTargetCount(Math.max(1, Math.min(14, Number(e.target.value) || 1)))}
+          title="Times to complete this quest before it's done"
+        />
+      </label>
       <button type="submit" disabled={submitting}>Add Quest</button>
     </form>
   );

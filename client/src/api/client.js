@@ -21,7 +21,7 @@ export const api = {
   advanceWeek: (seasonId) => request(`/seasons/${seasonId}/weeks`, { method: 'POST' }),
   getWeek: (id) => request(`/weeks/${id}`),
   addQuest: (weekId, data) => request(`/weeks/${weekId}/quests`, { method: 'POST', body: JSON.stringify(data) }),
-  toggleQuest: (id, completed) => request(`/quests/${id}`, { method: 'PATCH', body: JSON.stringify({ completed }) }),
+  setQuestProgress: (id, progress) => request(`/quests/${id}`, { method: 'PATCH', body: JSON.stringify({ progress }) }),
   deleteQuest: (id) => request(`/quests/${id}`, { method: 'DELETE' }),
   getStats: () => request('/stats'),
 };

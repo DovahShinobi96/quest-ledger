@@ -89,8 +89,8 @@ router.post('/:id/weeks', asyncHandler(async (req, res) => {
   // Carry over anything not ticked off yet; only completed items are left behind.
   if (currentWeek) {
     await pool.query(
-      `INSERT INTO quests (week_id, category, name, difficulty, assignee)
-       SELECT $1, category, name, difficulty, assignee
+      `INSERT INTO quests (week_id, category, name, difficulty, assignee, target_count)
+       SELECT $1, category, name, difficulty, assignee, target_count
        FROM quests WHERE week_id = $2 AND completed = FALSE`,
       [newWeekRows[0].id, currentWeek.id]
     );

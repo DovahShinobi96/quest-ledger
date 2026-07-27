@@ -43,8 +43,20 @@ async function init() {
       difficulty INTEGER NOT NULL CHECK (difficulty BETWEEN 1 AND 5),
       assignee TEXT NOT NULL CHECK (assignee IN ('jake', 'paula')),
       completed BOOLEAN NOT NULL DEFAULT FALSE,
-      completed_at TIMESTAMPTZ
+      completed_at TIMESTAMPTZ,
+      target_count INTEGER NOT NULL DEFAULT 1,
+      progress INTEGER NOT NULL DEFAULT 0
     );
+  `);
+
+  // Migration: quests originally tracked a single completion checkbox. Quests
+  // that need multiple sessions before they're done (e.g. "Exercise" 3x/week)
+  // now carry a target_count and a progress tally toward it; existing rows
+  // default to target_count=1 and backfill progress from their completed flag.
+  await pool.query(`
+    ALTER TABLE quests ADD COLUMN IF NOT EXISTS target_count INTEGER NOT NULL DEFAULT 1;
+    ALTER TABLE quests ADD COLUMN IF NOT EXISTS progress INTEGER NOT NULL DEFAULT 0;
+    UPDATE quests SET progress = target_count WHERE completed = TRUE AND progress < target_count;
   `);
 
   // Migration: earlier versions allowed assignee = 'both' on a single row,
