@@ -6,7 +6,7 @@ import {
 } from 'recharts';
 import { api } from '../api/client.js';
 
-const CATEGORIES = ['Proactive', 'Leisure', 'Health'];
+const CATEGORIES = ['Productive', 'Hobbies', 'Health'];
 const JAKE = 'var(--series-jake)';
 const PAULA = 'var(--series-paula)';
 const GRID = 'var(--border)';

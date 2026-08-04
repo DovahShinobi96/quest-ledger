@@ -5,7 +5,7 @@ import { api } from '../api/client.js';
 import QuestForm from '../components/QuestForm.jsx';
 import QuestList from '../components/QuestList.jsx';
 
-const CATEGORIES = ['Proactive', 'Leisure', 'Health'];
+const CATEGORIES = ['Productive', 'Hobbies', 'Health'];
 const PEOPLE = [
   { key: 'jake', label: 'Jake' },
   { key: 'paula', label: 'Paula' },

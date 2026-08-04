@@ -1,4 +1,4 @@
-const CATEGORY_ICONS = { Proactive: '⚔️', Leisure: '🍻', Health: '🛡️' };
+const CATEGORY_ICONS = { Productive: '⚔️', Hobbies: '🍻', Health: '🛡️' };
 
 function QuestProgress({ quest, onProgressChange }) {
   const target = quest.target_count ?? 1;

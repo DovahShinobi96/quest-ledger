@@ -38,7 +38,7 @@ async function init() {
     CREATE TABLE IF NOT EXISTS quests (
       id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
       week_id INTEGER NOT NULL REFERENCES weeks(id),
-      category TEXT NOT NULL CHECK (category IN ('Proactive', 'Leisure', 'Health')),
+      category TEXT NOT NULL CHECK (category IN ('Productive', 'Hobbies', 'Health')),
       name TEXT NOT NULL,
       difficulty INTEGER NOT NULL CHECK (difficulty BETWEEN 1 AND 5),
       assignee TEXT NOT NULL CHECK (assignee IN ('jake', 'paula')),
@@ -74,6 +74,17 @@ async function init() {
   await pool.query(`
     ALTER TABLE quests DROP CONSTRAINT IF EXISTS quests_assignee_check;
     ALTER TABLE quests ADD CONSTRAINT quests_assignee_check CHECK (assignee IN ('jake', 'paula'));
+  `);
+
+  // Migration: "Proactive"/"Leisure" categories were renamed to "Productive"/
+  // "Hobbies". Drop the old constraint before renaming existing rows (the
+  // rename itself would violate it), then reapply it with the new names so
+  // quests already logged under the old names don't vanish from their lists.
+  await pool.query(`
+    ALTER TABLE quests DROP CONSTRAINT IF EXISTS quests_category_check;
+    UPDATE quests SET category = 'Productive' WHERE category = 'Proactive';
+    UPDATE quests SET category = 'Hobbies' WHERE category = 'Leisure';
+    ALTER TABLE quests ADD CONSTRAINT quests_category_check CHECK (category IN ('Productive', 'Hobbies', 'Health'));
   `);
 
   const { rows } = await pool.query('SELECT COUNT(*)::int AS count FROM participants');

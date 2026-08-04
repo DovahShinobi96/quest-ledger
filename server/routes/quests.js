@@ -4,7 +4,7 @@ const asyncHandler = require('../asyncHandler');
 
 const router = express.Router();
 
-const CATEGORIES = ['Proactive', 'Leisure', 'Health'];
+const CATEGORIES = ['Productive', 'Hobbies', 'Health'];
 const ASSIGNEES = ['jake', 'paula', 'both'];
 
 router.post('/weeks/:weekId/quests', asyncHandler(async (req, res) => {
